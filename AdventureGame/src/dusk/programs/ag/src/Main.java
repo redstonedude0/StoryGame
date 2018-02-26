@@ -12,7 +12,7 @@ public class Main implements Runnable {
 	}
 	
 	public Main() {
-		//Initialise other classes
+		//Initialise this thread
 		start();
 	}
 	
@@ -23,15 +23,17 @@ public class Main implements Runnable {
 
 	@Override
 	public void run() {
-		while (true) {
-			update();
-		}
+		//If this is in a loop it will cause infinitely many threads, and probably a stack overflow
+		update();//Run once because update function self-runs on graphics completion
 	}
 	
 	public static long nextTime = System.currentTimeMillis();
 	public static int frames = 0;
 	public static long lastTime = System.currentTimeMillis();
 	
+	/**Steal Harrison's code because it works, without actually understanding what it does
+	 *
+	 */
 	public static void update() {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
